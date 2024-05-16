@@ -1,7 +1,6 @@
 import "./App.css";
 
 function Modal({ children, onClose, isBadWord }) {
-  console.log('first child',isBadWord)
   return (
     <div className="modal-backdrop">
       <div className="modal">
