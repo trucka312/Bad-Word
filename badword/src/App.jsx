@@ -110,7 +110,7 @@ function App() {
             Xóa BadWord
           </button>
           <button className="custom-btn btn-16" onClick={handleSearch}>
-            Tìm BadWord
+            Ckeck BadWord
           </button>
         </div>
       </div>
