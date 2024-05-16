@@ -1,102 +1,112 @@
-import { useState } from 'react'
-import './App.css'
-import data from './data'
-import Modal from './Modal'
+import { useState } from "react";
+import "./App.css";
+import data from "./data";
+import Modal from "./Modal";
 
 function App() {
-  const [badWord, setBadWord] = useState(data)
-  const [selectedItem, setSelectedItem] = useState(null)
-  const [newWord, setNewWord] = useState("")
-  const [showModal, setShowModal] = useState(false)
-  const [isBadWord, setIsBadWord] = useState(false)
+  const [badWord, setBadWord] = useState(data);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [newWord, setNewWord] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [isBadWord, setIsBadWord] = useState(false);
 
   const handleSelect = (item) => {
-    setSelectedItem(item)
-  }
+    setSelectedItem(item);
+  };
 
   const handleDelete = () => {
     if (selectedItem) {
-      setBadWord(badWord.filter(word => word !== selectedItem))
-      setSelectedItem(null)
+      setBadWord(badWord.filter((word) => word !== selectedItem));
+      setSelectedItem(null);
     }
-  }
+  };
 
   const handleAdd = () => {
     if (newWord.trim()) {
-      setBadWord([...badWord, newWord])
-      setNewWord("")
+      setBadWord([...badWord, newWord]);
+      setNewWord("");
     }
-  }
+  };
 
   const handleUpdate = () => {
-    const updater = badWord.filter((word) => word !== selectedItem)
+    const updater = badWord.filter((word) => word !== selectedItem);
     setBadWord([...updater, newWord]);
-  }
+  };
 
   const handleSearch = () => {
-    const result = badWord.filter((word) => word.toLowerCase() === newWord.toLowerCase())
-    setIsBadWord(result.length > 0)
-    setShowModal(true)
-  }
+    const result = badWord.filter(
+      (word) => word.toLowerCase() === newWord.toLowerCase()
+    );
+    setIsBadWord(result.length > 0);
+    setShowModal(true);
+  };
 
   const closeModal = () => {
     setShowModal(false);
-  }
+  };
 
   return (
     <div>
-      <h2 className='text'>Danh sách Bad Word:</h2>
-      
+      <h2 className="text">Danh sách Bad Word:</h2>
+
       <div>
-        <div className='card'>
-          <div className='card-list'>
-            {badWord.length > 0 ? badWord.map((item) => (
-              <div
-                key={item.id}
-                onClick={() => handleSelect(item)}
-                style={{ backgroundColor: item === selectedItem ? 'lightgray' : '#191c29' }}
-              >
-                {item}
-              </div>
-            )) : <></>}
+        <div className="card">
+          <div className="card-list">
+            {badWord.length > 0 ? (
+              badWord.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => handleSelect(item)}
+                  style={{
+                    backgroundColor:
+                      item === selectedItem ? "lightgray" : "#191c29",
+                  }}
+                >
+                  {item}
+                </div>
+              ))
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>
 
       {showModal && (
         <Modal onClose={closeModal} isBadWord={isBadWord}>
-          <p>{newWord} {isBadWord ? 'là Bad Word!' : 'không phải là Bad Word!'}</p>
+          <p>
+            {newWord} {isBadWord ? "là Bad Word!" : "không phải là Bad Word!"}
+          </p>
         </Modal>
       )}
-      
+
       <div className="bottom">
         <div>
           <div className="input-container">
-            
-          <input 
-            type="text" 
-            value={newWord ? newWord : ''}
-            onChange={(e) => setNewWord(e.target.value)}
-            className="animated-input"
-            placeholder="Nhập BadWord..."
-          />
+            <input
+              type="text"
+              value={newWord ? newWord : ""}
+              onChange={(e) => setNewWord(e.target.value)}
+              className="animated-input"
+              placeholder="Nhập BadWord..."
+            />
           </div>
-          <button className='custom-btn btn-8' onClick={handleAdd}>
+          <button className="custom-btn btn-8" onClick={handleAdd}>
             Thêm BadWord
           </button>
-          <button className='custom-btn btn-14' onClick={handleUpdate}>
+          <button className="custom-btn btn-14" onClick={handleUpdate}>
             Sửa BadWord
           </button>
-          <button className='custom-btn btn-11' onClick={handleDelete}>
+          <button className="custom-btn btn-11" onClick={handleDelete}>
             Xóa BadWord
           </button>
-          <button className='custom-btn btn-16' onClick={handleSearch}>
+          <button className="custom-btn btn-16" onClick={handleSearch}>
             Tìm BadWord
           </button>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
