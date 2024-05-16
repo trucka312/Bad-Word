@@ -34,11 +34,16 @@ function App() {
   };
 
   const handleSearch = () => {
-    const result = badWord.filter(
-      (word) => word.toLowerCase() === newWord.toLowerCase()
-    );
-    setIsBadWord(result.length > 0);
-    setShowModal(true);
+    if (newWord === null) {
+      setIsBadWord("chưa nhập bad word ấn chi má ?");
+      setShowModal(true);
+    } else {
+      const result = badWord.filter(
+        (word) => word.toLowerCase() === newWord.toLowerCase()
+      );
+      setIsBadWord(result.length > 0);
+      setShowModal(true);
+    }
   };
 
   const closeModal = () => {
@@ -75,7 +80,11 @@ function App() {
       {showModal && (
         <Modal onClose={closeModal} isBadWord={isBadWord}>
           <p>
-            {newWord} {isBadWord ? "là Bad Word!" : "không phải là Bad Word!"}
+            {newWord !== ""
+              ? `${newWord} ${
+                  isBadWord ? "là Bad Word!" : "không phải là Bad Word!"
+                }`
+              : "Chưa nhập Bad Word ấn chi má ?"}
           </p>
         </Modal>
       )}
@@ -85,7 +94,7 @@ function App() {
           <div className="input-container">
             <input
               type="text"
-              value={newWord ? newWord : ""}
+              value={newWord}
               onChange={(e) => setNewWord(e.target.value)}
               className="animated-input"
               placeholder="Nhập BadWord..."
